@@ -127,10 +127,9 @@ function LandingPageContent({ onEnterApp }: LandingPageProps) {
             <LogoMarquee />
             <Stats />
             <BentoShowcase />
-            <FeatureDeepDive />
             <HowItWorks onEnterApp={onEnterApp} />
-            <TrustSection />
             <ComparisonTable />
+            <TrustSection />
             <Testimonials />
             <Pricing onEnterApp={onEnterApp} billingPeriod={billingPeriod} setBillingPeriod={setBillingPeriod} />
             <Faq openFaq={openFaq} setOpenFaq={setOpenFaq} />
@@ -576,7 +575,7 @@ function LogoMarquee() {
 
   return (
     <motion.section 
-      className="py-24 lg:py-32 border-y border-white/[0.04]"
+      className="py-16 lg:py-20 border-y border-white/[0.04]"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -585,7 +584,7 @@ function LogoMarquee() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-10"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -624,40 +623,11 @@ function LogoMarquee() {
                 >
                   {customer.name.charAt(0)}
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-base font-semibold text-white whitespace-nowrap">{customer.name}</span>
-                  <span className="text-xs text-zinc-500">Construction</span>
-                </div>
+                <span className="text-base font-semibold text-white whitespace-nowrap">{customer.name}</span>
               </motion.div>
             ))}
           </div>
         </div>
-
-        {/* Stats bar */}
-        <motion.div 
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white mb-1">2,400+</p>
-            <p className="text-sm text-zinc-500">Active users</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white mb-1">94%</p>
-            <p className="text-sm text-zinc-500">Satisfaction rate</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white mb-1">50+</p>
-            <p className="text-sm text-zinc-500">Countries</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-white mb-1">4.9/5</p>
-            <p className="text-sm text-zinc-500">Average rating</p>
-          </div>
-        </motion.div>
       </div>
       <style>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -1163,160 +1133,6 @@ function BentoShowcase() {
               </div>
             </div>
           </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ===================== FEATURE DEEP DIVE ===================== */
-function FeatureDeepDive() {
-  const features = [
-    {
-      title: 'AI-Powered Evidence Extraction',
-      bullets: [
-        'Extracts key facts and dates automatically',
-        'Flags items for human review',
-      ],
-      icon: Zap,
-      color: 'blue',
-    },
-    {
-      title: 'Exact Source Citations',
-      bullets: [
-        'Page-level citations for every claim',
-        'Full audit trail of AI decisions',
-      ],
-      icon: BookOpen,
-      color: 'emerald',
-    },
-    {
-      title: 'Native Integrations',
-      bullets: [
-        'Sync with Aconex, Procore & Outlook',
-        'Real-time updates when files change',
-      ],
-      icon: Layers,
-      color: 'violet',
-    },
-  ];
-
-  const colorMap = {
-    blue: {
-      bg: 'bg-gradient-to-br from-blue-500/20 to-blue-600/10',
-      border: 'border-blue-500/30',
-      text: 'text-blue-400',
-      glow: 'shadow-blue-500/20',
-    },
-    emerald: {
-      bg: 'bg-gradient-to-br from-emerald-500/20 to-emerald-600/10',
-      border: 'border-emerald-500/30',
-      text: 'text-emerald-400',
-      glow: 'shadow-emerald-500/20',
-    },
-    violet: {
-      bg: 'bg-gradient-to-br from-violet-500/20 to-violet-600/10',
-      border: 'border-violet-500/30',
-      text: 'text-violet-400',
-      glow: 'shadow-violet-500/20',
-    },
-  };
-
-  return (
-    <section id="how-it-works-deep" className="relative py-24 lg:py-32 px-6 border-b border-white/[0.04] overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent" />
-      
-      <div className="relative max-w-7xl mx-auto">
-        <div className="max-w-2xl mx-auto text-center mb-20">
-          <p className="text-sm font-medium text-blue-400 uppercase tracking-wider mb-3">Deep Dive</p>
-          <h2 className="text-3xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
-            Built for construction claims
-          </h2>
-        </div>
-
-        <div className="space-y-32">
-          {features.map(({ title, bullets, icon: Icon, color }, i) => {
-            const colors = colorMap[color as keyof typeof colorMap];
-            const isEven = i % 2 === 0;
-
-            return (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                whileHover={{ scale: 1.01 }}
-                className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
-                  !isEven ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Content */}
-                <div className={isEven ? '' : 'lg:order-2'}>
-                  <div className={`w-14 h-14 ${colors.bg} border ${colors.border} rounded-2xl flex items-center justify-center mb-6 shadow-lg ${colors.glow}`}>
-                    <Icon className={`w-7 h-7 ${colors.text}`} />
-                  </div>
-                  <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
-                    {title}
-                  </h3>
-                  <ul className="space-y-4">
-                    {bullets.map((bullet, j) => (
-                      <li key={j} className="flex items-start gap-3 group">
-                        <div className={`w-6 h-6 ${colors.bg} border ${colors.border} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                          <Check className={`w-3.5 h-3.5 ${colors.text}`} />
-                        </div>
-                        <span className="text-zinc-300 text-base leading-relaxed">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Visual */}
-                <div className={`relative ${isEven ? '' : 'lg:order-1'}`}>
-                  {/* Enhanced glow effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} rounded-3xl blur-3xl opacity-30`} />
-                  
-                  {/* Premium card with depth */}
-                  <div className="relative bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.1] rounded-2xl p-8 backdrop-blur-xl shadow-2xl">
-                    {/* Top highlight */}
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                    
-                    {/* Mock UI */}
-                    <div className="space-y-5">
-                      <div className="flex items-center gap-4 pb-5 border-b border-white/[0.08]">
-                        <div className={`w-10 h-10 ${colors.bg} border ${colors.border} rounded-xl flex items-center justify-center shadow-lg ${colors.glow}`}>
-                          <Icon className={`w-5 h-5 ${colors.text}`} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="h-2.5 bg-gradient-to-r from-white/[0.1] to-white/[0.05] rounded w-36 mb-2" />
-                          <div className="h-2 bg-white/[0.06] rounded w-28" />
-                        </div>
-                      </div>
-                      {[...Array(3)].map((_, j) => (
-                        <motion.div 
-                          key={j}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: j * 0.1 }}
-                          className="flex items-start gap-4 p-4 bg-white/[0.03] rounded-xl border border-white/[0.06] hover:border-white/[0.1] hover:bg-white/[0.05] transition-all duration-200"
-                        >
-                          <div className={`w-8 h-8 ${colors.bg} border ${colors.border} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                            <div className={`w-2.5 h-2.5 ${colors.text.replace('text', 'bg')} rounded-full shadow-lg ${colors.glow}`} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="h-2.5 bg-gradient-to-r from-white/[0.1] to-white/[0.05] rounded w-full mb-2.5" />
-                            <div className="h-2 bg-white/[0.06] rounded w-3/4" />
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
         </div>
       </div>
     </section>
