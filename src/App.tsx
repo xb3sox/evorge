@@ -136,8 +136,8 @@ export default function App() {
 // Dashboard View
 function DashboardView() {
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
-      <div className="mb-10 flex items-center justify-between">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+      <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Projects</h1>
           <p className="text-sm text-[var(--muted)] mt-1">Manage your claim evidence packages</p>
@@ -199,18 +199,26 @@ function DashboardView() {
         ))}
       </div>
 
-      <div className="mt-10 grid grid-cols-3 gap-4">
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4 text-center">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <FileText className="w-5 h-5 text-blue-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">291</p>
           <p className="text-xs text-[var(--muted)] mt-1">Total Documents</p>
         </div>
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4 text-center">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <Zap className="w-5 h-5 text-amber-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">165</p>
           <p className="text-xs text-[var(--muted)] mt-1">Evidence Items</p>
         </div>
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4 text-center">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">94%</p>
           <p className="text-xs text-[var(--muted)] mt-1">Avg. Confidence</p>
+        </div>
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <TrendingUp className="w-5 h-5 text-violet-400 mb-3" />
+          <p className="text-2xl font-bold text-[var(--fg)]">50%</p>
+          <p className="text-xs text-[var(--muted)] mt-1">Time Saved</p>
         </div>
       </div>
     </div>
@@ -220,7 +228,7 @@ function DashboardView() {
 // Documents View
 function DocumentsView() {
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Documents</h1>
@@ -266,24 +274,32 @@ function DocumentsView() {
 // Timeline View
 function TimelineView() {
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Timeline</h1>
         <p className="text-sm text-[var(--muted)] mt-1">{evidence.length} evidence items</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <Clock className="w-5 h-5 text-blue-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">{evidence.length}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Evidence Items</p>
         </div>
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <FileText className="w-5 h-5 text-emerald-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">{evidence.reduce((acc, e) => acc + e.sources.length, 0)}</p>
           <p className="text-xs text-[var(--muted)] mt-1">Source Citations</p>
         </div>
-        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-4">
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <CheckCircle2 className="w-5 h-5 text-amber-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">{Math.round(evidence.reduce((acc, e) => acc + e.confidence, 0) / evidence.length)}%</p>
           <p className="text-xs text-[var(--muted)] mt-1">Avg. Confidence</p>
+        </div>
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <TrendingUp className="w-5 h-5 text-violet-400 mb-3" />
+          <p className="text-2xl font-bold text-[var(--fg)]">94%</p>
+          <p className="text-xs text-[var(--muted)] mt-1">AI Accuracy</p>
         </div>
       </div>
 
@@ -333,7 +349,7 @@ function ReviewView() {
   const progressPercent = Math.round((approvedItems.length / totalItems) * 100);
 
   return (
-    <div className="p-6 lg:p-8 max-w-4xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Review</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Verify AI-extracted evidence before export</p>
@@ -414,7 +430,7 @@ function ReviewView() {
 // Export View
 function ExportView() {
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Export</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Generate professional evidence packages</p>
@@ -472,7 +488,7 @@ function AuditView() {
   ];
 
   return (
-    <div className="p-6 lg:p-8 max-w-4xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Activity</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Recent actions and system events</p>
@@ -522,9 +538,9 @@ function ROIDashboardView() {
   ];
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[var(--fg)]">ROI Dashboard</h1>
+        <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">ROI Dashboard</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Measure the impact of AI-powered claim preparation</p>
       </div>
 
@@ -605,13 +621,13 @@ function IntegrationsView() {
   ];
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[var(--fg)]">Integrations</h1>
+        <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Integrations</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Connect your project management and communication tools</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
           <Link2 className="w-5 h-5 text-blue-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">4</p>
@@ -626,6 +642,11 @@ function IntegrationsView() {
           <Activity className="w-5 h-5 text-amber-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">Live</p>
           <p className="text-xs text-[var(--muted)] mt-1">Sync Status</p>
+        </div>
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <TrendingUp className="w-5 h-5 text-violet-400 mb-3" />
+          <p className="text-2xl font-bold text-[var(--fg)]">99.9%</p>
+          <p className="text-xs text-[var(--muted)] mt-1">Uptime</p>
         </div>
       </div>
 
@@ -698,9 +719,9 @@ function SecurityView() {
   ];
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[var(--fg)]">Security & Compliance</h1>
+        <h1 className="text-3xl font-bold text-[var(--fg)] tracking-tight">Security & Compliance</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Manage users, monitor access, and review security events</p>
       </div>
 
@@ -738,7 +759,7 @@ function SecurityView() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
           <Users className="w-5 h-5 text-blue-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">3</p>
@@ -753,6 +774,11 @@ function SecurityView() {
           <AlertTriangle className="w-5 h-5 text-red-400 mb-3" />
           <p className="text-2xl font-bold text-[var(--fg)]">0</p>
           <p className="text-xs text-[var(--muted)] mt-1">Critical Events</p>
+        </div>
+        <div className="bg-[var(--panel)] rounded-xl border border-[var(--border)] p-5">
+          <Lock className="w-5 h-5 text-violet-400 mb-3" />
+          <p className="text-2xl font-bold text-[var(--fg)]">100%</p>
+          <p className="text-xs text-[var(--muted)] mt-1">Encrypted</p>
         </div>
       </div>
 
