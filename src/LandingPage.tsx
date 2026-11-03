@@ -563,8 +563,16 @@ function IntegrationLogo({ name, size = 28 }: { name: string; size?: number }) {
 
 /* ===================== LOGO MARQUEE ===================== */
 function LogoMarquee() {
-  const customers = ['Turner', 'PCL', 'Ledcor', 'EllisDon', 'Clark', 'Balfour Beatty', 'AECOM', 'Skanska'];
-  const integrations = ['Aconex', 'Procore', 'Outlook', 'SharePoint'];
+  const customers = [
+    { name: 'Turner', color: '#E63946' },
+    { name: 'PCL', color: '#1D3557' },
+    { name: 'Ledcor', color: '#2A9D8F' },
+    { name: 'EllisDon', color: '#264653' },
+    { name: 'Clark', color: '#E76F51' },
+    { name: 'Balfour Beatty', color: '#F4A261' },
+    { name: 'AECOM', color: '#457B9D' },
+    { name: 'Skanska', color: '#F77F00' },
+  ];
 
   return (
     <motion.section 
@@ -575,54 +583,81 @@ function LogoMarquee() {
       transition={{ duration: 0.6 }}
     >
       <div className="max-w-7xl mx-auto px-6">
-        {/* Customer logos */}
-        <motion.p 
-          className="text-center text-sm text-zinc-600 mb-8 uppercase tracking-widest"
+        {/* Section header */}
+        <motion.div 
+          className="text-center mb-12"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          Trusted by 2,400+ subcontractors
-        </motion.p>
-        <div className="relative overflow-hidden mb-12">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#09090b] to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#09090b] to-transparent z-10" />
-          <div className="flex gap-12 animate-marquee">
-            {[...customers, ...customers].map((name, i) => (
+          <p className="text-sm text-zinc-500 mb-2 uppercase tracking-wider font-medium">
+            Trusted by industry leaders
+          </p>
+          <p className="text-2xl font-bold text-white">
+            2,400+ subcontractors building winning claims
+          </p>
+        </motion.div>
+
+        {/* Customer logos marquee */}
+        <div className="relative overflow-hidden">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#09090b] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#09090b] to-transparent z-10 pointer-events-none" />
+          
+          {/* Scrolling logos */}
+          <div className="flex gap-16 animate-marquee">
+            {[...customers, ...customers].map((customer, i) => (
               <motion.div 
                 key={i} 
-                className="flex items-center gap-2 flex-shrink-0 opacity-40 hover:opacity-70"
+                className="flex items-center gap-3 flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity duration-300"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="w-8 h-8 bg-white/[0.06] rounded-lg border border-white/[0.08] flex items-center justify-center">
-                  <span className="text-xs font-bold text-zinc-400">{name[0]}</span>
+                {/* Logo placeholder with brand color */}
+                <div 
+                  className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white text-lg shadow-lg"
+                  style={{ 
+                    backgroundColor: customer.color,
+                    boxShadow: `0 4px 14px 0 ${customer.color}40`
+                  }}
+                >
+                  {customer.name.charAt(0)}
                 </div>
-                <span className="text-sm font-medium text-zinc-400 whitespace-nowrap">{name}</span>
+                <div className="flex flex-col">
+                  <span className="text-base font-semibold text-white whitespace-nowrap">{customer.name}</span>
+                  <span className="text-xs text-zinc-500">Construction</span>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Integration partners - simplified */}
-        <p className="text-center text-xs text-zinc-600 mb-6 uppercase tracking-widest">
-          Integrates with your tools
-        </p>
-        <div className="flex items-center justify-center gap-8 flex-wrap">
-          {integrations.map((name) => (
-            <motion.div 
-              key={name} 
-              className="flex items-center gap-2 opacity-60 hover:opacity-100"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="w-10 h-10 bg-white rounded-lg border border-white/[0.08] flex items-center justify-center">
-                <IntegrationLogo name={name} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Stats bar */}
+        <motion.div 
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="text-center">
+            <p className="text-3xl font-bold text-white mb-1">2,400+</p>
+            <p className="text-sm text-zinc-500">Active users</p>
+          </div>
+          <div className="text-center">
+            <p className="text-3xl font-bold text-white mb-1">94%</p>
+            <p className="text-sm text-zinc-500">Satisfaction rate</p>
+          </div>
+          <div className="text-center">
+            <p className="text-3xl font-bold text-white mb-1">50+</p>
+            <p className="text-sm text-zinc-500">Countries</p>
+          </div>
+          <div className="text-center">
+            <p className="text-3xl font-bold text-white mb-1">4.9/5</p>
+            <p className="text-sm text-zinc-500">Average rating</p>
+          </div>
+        </motion.div>
       </div>
       <style>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
