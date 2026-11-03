@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Component, ErrorInfo, ReactNode } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
   Shield, FileText, Clock, AlertTriangle, CheckCircle2,
@@ -14,11 +14,67 @@ interface LandingPageProps {
   onEnterApp: () => void;
 }
 
+/* ===================== ERROR BOUNDARY ===================== */
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Landing page error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#09090b] flex items-center justify-center p-6">
+          <div className="max-w-md text-center">
+            <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-2">Something went wrong</h2>
+            <p className="text-zinc-400 mb-6">We're sorry, but something unexpected happened. Please try refreshing the page.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default function LandingPage({ onEnterApp }: LandingPageProps) {
+  return (
+    <ErrorBoundary>
+      <LandingPageContent onEnterApp={onEnterApp} />
+    </ErrorBoundary>
+  );
+}
+
+function LandingPageContent({ onEnterApp }: LandingPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,6 +89,19 @@ export default function LandingPage({ onEnterApp }: LandingPageProps) {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Simulate loading for skeleton screens
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Track page view
+  useEffect(() => {
+    console.log('Landing page loaded');
+    // In production, you would add analytics here
+    // analytics.track('page_view', { page: 'landing' });
   }, []);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -50,18 +119,24 @@ export default function LandingPage({ onEnterApp }: LandingPageProps) {
       <Nav scrolled={scrolled} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} closeMobileMenu={closeMobileMenu} onEnterApp={onEnterApp} />
       
       <main id="main-content">
-        <Hero onEnterApp={onEnterApp} />
-        <LogoMarquee />
-        <Stats />
-        <BentoShowcase />
-        <FeatureDeepDive />
-        <HowItWorks onEnterApp={onEnterApp} />
-        <TrustSection />
-        <ComparisonTable />
-        <Testimonials />
-        <Pricing onEnterApp={onEnterApp} billingPeriod={billingPeriod} setBillingPeriod={setBillingPeriod} />
-        <Faq openFaq={openFaq} setOpenFaq={setOpenFaq} />
-        <FinalCta onEnterApp={onEnterApp} />
+        {!isLoaded ? (
+          <LoadingSkeleton />
+        ) : (
+          <>
+            <Hero onEnterApp={onEnterApp} />
+            <LogoMarquee />
+            <Stats />
+            <BentoShowcase />
+            <FeatureDeepDive />
+            <HowItWorks onEnterApp={onEnterApp} />
+            <TrustSection />
+            <ComparisonTable />
+            <Testimonials />
+            <Pricing onEnterApp={onEnterApp} billingPeriod={billingPeriod} setBillingPeriod={setBillingPeriod} />
+            <Faq openFaq={openFaq} setOpenFaq={setOpenFaq} />
+            <FinalCta onEnterApp={onEnterApp} />
+          </>
+        )}
       </main>
 
       <Footer />
@@ -81,6 +156,54 @@ function ScrollProgress() {
       className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-violet-500 z-50 origin-left"
       aria-hidden="true"
     />
+  );
+}
+
+/* ===================== LOADING SKELETON ===================== */
+function LoadingSkeleton() {
+  return (
+    <div className="min-h-screen bg-[#09090b] pt-20">
+      {/* Hero Skeleton */}
+      <section className="py-24 lg:py-32 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="h-8 bg-white/[0.05] rounded-lg w-3/4 mx-auto mb-6 animate-pulse" />
+          <div className="h-12 bg-white/[0.05] rounded-lg w-full mx-auto mb-4 animate-pulse" />
+          <div className="h-12 bg-white/[0.05] rounded-lg w-2/3 mx-auto mb-8 animate-pulse" />
+          <div className="h-6 bg-white/[0.05] rounded-lg w-1/2 mx-auto mb-12 animate-pulse" />
+          <div className="flex gap-4 justify-center">
+            <div className="h-12 bg-white/[0.05] rounded-xl w-40 animate-pulse" />
+            <div className="h-12 bg-white/[0.05] rounded-xl w-40 animate-pulse" />
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Skeleton */}
+      <section className="py-24 lg:py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="text-center">
+                <div className="h-16 bg-white/[0.05] rounded-lg w-32 mx-auto mb-4 animate-pulse" />
+                <div className="h-6 bg-white/[0.05] rounded-lg w-24 mx-auto mb-2 animate-pulse" />
+                <div className="h-4 bg-white/[0.05] rounded-lg w-20 mx-auto animate-pulse" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bento Grid Skeleton */}
+      <section className="py-24 lg:py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="h-10 bg-white/[0.05] rounded-lg w-1/2 mx-auto mb-16 animate-pulse" />
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className={`bg-white/[0.05] rounded-2xl p-8 animate-pulse ${i < 2 ? 'md:col-span-3 h-64' : 'md:col-span-2 h-48'}`} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 
@@ -211,7 +334,13 @@ function Hero({ onEnterApp }: { onEnterApp: () => void }) {
       {/* Clean grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,#000_50%,transparent_100%)]" />
 
-      <motion.div style={{ y, opacity }} className="relative max-w-4xl mx-auto text-center">
+      <motion.div 
+        style={{ y, opacity }} 
+        className="relative max-w-4xl mx-auto text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* Premium badge with glow */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 bg-gradient-to-r from-white/[0.08] to-white/[0.03] border border-white/[0.1] px-5 py-2 rounded-full mb-8 backdrop-blur-xl shadow-lg shadow-blue-500/5">
@@ -438,12 +567,24 @@ function LogoMarquee() {
   const integrations = ['Aconex', 'Procore', 'Outlook', 'SharePoint'];
 
   return (
-    <section className="py-24 lg:py-32 border-y border-white/[0.04]">
+    <motion.section 
+      className="py-24 lg:py-32 border-y border-white/[0.04]"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Customer logos */}
-        <p className="text-center text-sm text-zinc-600 mb-8 uppercase tracking-widest">
+        <motion.p 
+          className="text-center text-sm text-zinc-600 mb-8 uppercase tracking-widest"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
           Trusted by 2,400+ subcontractors
-        </p>
+        </motion.p>
         <div className="relative overflow-hidden mb-12">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#09090b] to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#09090b] to-transparent z-10" />
@@ -487,7 +628,7 @@ function LogoMarquee() {
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { animation: marquee 45s linear infinite; }
       `}</style>
-    </section>
+    </motion.section>
   );
 }
 
@@ -508,7 +649,13 @@ function Stats() {
   };
 
   return (
-    <section className="relative py-24 lg:py-32 px-6 border-b border-white/[0.04] overflow-hidden">
+    <motion.section 
+      className="relative py-24 lg:py-32 px-6 border-b border-white/[0.04] overflow-hidden"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/[0.02] to-transparent" />
       
@@ -522,7 +669,7 @@ function Stats() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 className="text-center group"
               >
                 <div className="relative">
@@ -544,7 +691,7 @@ function Stats() {
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
