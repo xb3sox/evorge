@@ -607,24 +607,21 @@ function LogoMarquee() {
           {/* Scrolling logos */}
           <div className="flex gap-16 animate-marquee">
             {[...customers, ...customers].map((customer, i) => (
-              <motion.div 
+              <div 
                 key={i} 
-                className="flex items-center gap-3 flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity duration-300"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3 flex-shrink-0 opacity-50 hover:opacity-80 transition-opacity duration-200"
               >
                 {/* Logo placeholder with brand color */}
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white text-lg shadow-lg"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white text-lg"
                   style={{ 
                     backgroundColor: customer.color,
-                    boxShadow: `0 4px 14px 0 ${customer.color}40`
                   }}
                 >
                   {customer.name.charAt(0)}
                 </div>
                 <span className="text-base font-semibold text-white whitespace-nowrap">{customer.name}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -671,24 +668,20 @@ function Stats() {
             return (
               <motion.div
                 key={label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="text-center group"
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className="text-center"
               >
                 <div className="relative">
-                  <motion.div 
-                    className="mb-2"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <span className={`text-5xl lg:text-6xl font-bold bg-gradient-to-b ${colors.gradient} bg-clip-text text-transparent drop-shadow-lg`}>
+                  <div className="mb-2">
+                    <span className={`text-5xl lg:text-6xl font-bold bg-gradient-to-b ${colors.gradient} bg-clip-text text-transparent`}>
                       <AnimatedCounter value={value} />
                       {suffix}
                     </span>
-                  </motion.div>
-                  <p className="text-lg font-semibold text-white tracking-tight group-hover:text-blue-400 transition-colors duration-300">{label}</p>
+                  </div>
+                  <p className="text-lg font-semibold text-white tracking-tight">{label}</p>
                   <p className="text-sm text-zinc-500 mt-1">{description}</p>
                 </div>
               </motion.div>
@@ -763,13 +756,12 @@ function BentoShowcase() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           {/* AI Extraction - Large with Document Preview */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }}
-            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-            className="md:col-span-3 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-blue-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ duration: 0.4 }}
+            className="md:col-span-3 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-blue-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-300">
@@ -813,14 +805,12 @@ function BentoShowcase() {
 
           {/* Source Citations - with Document Preview */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            transition={{ delay: 0.1 }}
-            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-            className="md:col-span-3 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-emerald-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ delay: 0.1, duration: 0.4 }}
+            className="md:col-span-3 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-emerald-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-500/20 transition-all duration-300">
                 <BookOpen className="w-7 h-7 text-emerald-400" />
@@ -882,14 +872,12 @@ function BentoShowcase() {
 
           {/* Gap Detection - with Warning Panel */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            transition={{ delay: 0.15 }}
-            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-amber-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ delay: 0.15, duration: 0.4 }}
+            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-amber-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-amber-500/20 transition-all duration-300">
                 <Target className="w-7 h-7 text-amber-400" />
@@ -931,14 +919,12 @@ function BentoShowcase() {
 
           {/* Auto Timeline - with Visual Timeline */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            transition={{ delay: 0.2 }}
-            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-violet-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ delay: 0.2, duration: 0.4 }}
+            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-violet-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-violet-500/20 to-violet-600/10 border border-violet-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-violet-500/20 transition-all duration-300">
                 <GitBranch className="w-7 h-7 text-violet-400" />
@@ -986,14 +972,12 @@ function BentoShowcase() {
 
           {/* One-Click Export - with PDF Preview */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            transition={{ delay: 0.25 }}
-            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-cyan-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ delay: 0.25, duration: 0.4 }}
+            className="md:col-span-2 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-cyan-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
               <div className="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/20 transition-all duration-300">
                 <Download className="w-7 h-7 text-cyan-400" />
@@ -1034,14 +1018,12 @@ function BentoShowcase() {
 
           {/* Native Integrations - Enhanced with Product Logos */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
             viewport={{ once: true }} 
-            transition={{ delay: 0.3 }}
-            whileHover={{ y: -6, scale: 1.005, transition: { duration: 0.3 } }}
-            className="md:col-span-6 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-violet-500/40 transition-all duration-300 group overflow-hidden"
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="md:col-span-6 relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-violet-500/30 transition-colors duration-200 group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -1194,11 +1176,10 @@ function HowItWorks({ onEnterApp }: { onEnterApp: () => void }) {
             return (
               <motion.div 
                 key={num}
-                initial={{ opacity: 0, y: 20 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
+                initial={{ opacity: 0 }} 
+                whileInView={{ opacity: 1 }} 
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -6, scale: 1.05, transition: { duration: 0.3 } }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
                 className="group relative"
               >
                 {/* Step number */}
@@ -1267,11 +1248,8 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.2 } }}
-              className="group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08] rounded-2xl p-7 hover:border-emerald-500/30 transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08] rounded-2xl p-7 hover:border-emerald-500/30 transition-colors duration-200 overflow-hidden"
             >
-              {/* Subtle glow on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-500/20 transition-all duration-300">
@@ -1299,12 +1277,11 @@ function TrustSection() {
             {compliance.map(({ name, description }, i) => (
               <motion.div
                 key={name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="text-center group"
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className="text-center"
               >
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 rounded-2xl mb-4 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-500/20 transition-all duration-300">
                   <CheckCircle2 className="w-10 h-10 text-emerald-400" />
@@ -1360,7 +1337,7 @@ function ComparisonTable() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="grid grid-cols-4 gap-4 p-6 border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] hover:scale-[1.02] transition-all duration-300"
+              className="grid grid-cols-4 gap-4 p-6 border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors duration-200"
             >
               <div className="text-sm font-medium text-white">{feature}</div>
               <div className="text-sm text-zinc-500 text-center">{manual}</div>
@@ -1403,11 +1380,8 @@ function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
-              className="group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-white/[0.15] transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 hover:border-white/[0.15] transition-colors duration-200 overflow-hidden"
             >
-              {/* Subtle glow on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
               <div className="relative">
                 {/* Quote icon */}
@@ -1518,17 +1492,12 @@ function Pricing({ onEnterApp, billingPeriod, setBillingPeriod }: {
                 whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -6, scale: highlighted ? 1.06 : 1.02, transition: { duration: 0.3 } }}
-                className={`group relative rounded-2xl p-8 transition-all duration-300 ${
+                className={`group relative rounded-2xl p-8 transition-colors duration-200 ${
                   highlighted
                     ? 'bg-gradient-to-b from-blue-500/[0.15] to-blue-500/[0.05] border-2 border-blue-500/50 shadow-[0_0_60px_rgba(59,130,246,0.3)] scale-105 z-10'
                     : 'bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/[0.08] hover:border-white/[0.15]'
                 }`}
               >
-                {/* Subtle glow on hover for non-highlighted */}
-                {!highlighted && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                )}
                 
                 {/* Highlighted badge */}
                 {highlighted && (
@@ -1615,11 +1584,9 @@ function Faq({ openFaq, setOpenFaq }: { openFaq: number | null; setOpenFaq: (n: 
 
         <div className="space-y-2">
           {faqs.map(({ q, a }, i) => (
-            <motion.div 
+            <div 
               key={i} 
               className="bg-white/[0.02] rounded-xl border border-white/[0.06] overflow-hidden"
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.2 }}
             >
               <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="w-full flex items-center justify-between p-5 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 rounded-xl">
@@ -1644,7 +1611,7 @@ function Faq({ openFaq, setOpenFaq }: { openFaq: number | null; setOpenFaq: (n: 
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -1733,13 +1700,13 @@ function Footer() {
               AI-powered claim evidence preparation for construction subcontractors.
             </p>
             <div className="flex items-center gap-3 mb-5">
-              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <a href="#" className="w-9 h-9 bg-white/[0.04] border border-white/[0.06] rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.1] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <Github className="w-4 h-4" />
               </a>
             </div>
@@ -1800,12 +1767,10 @@ function BackToTop() {
 
   return (
     <motion.button
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.8 }}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: visible ? 1 : 0 }}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-6 right-6 z-40 w-10 h-10 bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.08] rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#09090b]"
+      className="fixed bottom-6 right-6 z-40 w-10 h-10 bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.08] rounded-full flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#09090b]"
       aria-label="Back to top"
     >
       <ArrowUp className="w-4 h-4 text-white" />
